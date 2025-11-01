@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerInput))]
-
 public class PlayerBehavior : MonoBehaviour
 {
     [Header("Movement")]
@@ -22,6 +21,9 @@ public class PlayerBehavior : MonoBehaviour
         var moveAction = playerInput.actions["Move"];
         moveAction.performed += OnMove;
         moveAction.canceled += OnMove;
+
+        var interactAction = playerInput.actions["Interact"];
+        interactAction.performed += OnInteract;
     }
 
     private void OnDestroy()
@@ -29,6 +31,9 @@ public class PlayerBehavior : MonoBehaviour
         var moveAction = playerInput.actions["Move"];
         moveAction.performed -= OnMove;
         moveAction.canceled -= OnMove;
+
+        var interactAction = playerInput.actions["Interact"];
+        interactAction.performed -= OnInteract;
     }
 
     private void Update()
@@ -47,6 +52,23 @@ public class PlayerBehavior : MonoBehaviour
         moveInput = context.ReadValue<Vector2>();
     }
 
+    private void OnInteract(InputAction.CallbackContext context)
+    {
+        Vector3Int position = new Vector3Int(
+            Mathf.FloorToInt(transform.position.x),
+            Mathf.FloorToInt(transform.position.y),
+            0
+        );
+
+        if (GameManager.instance != null && GameManager.instance.tileManager != null)
+        {
+            if (GameManager.instance.tileManager.IsInteractable(position))
+            {
+                GameManager.instance.tileManager.SetInteracted(position);
+            }
+        }
+    }
+
     private void AnimateMovement(Vector3 direction)
     {
         if (animator == null) return;
@@ -61,5 +83,3 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 }
-
-
