@@ -13,6 +13,9 @@ public class PlayerBehavior : MonoBehaviour
     private Vector2 moveInput;
     private Vector3 movement;
     private PlayerInput playerInput;
+    private Collectable currentCollectable;
+
+    public Inventory inventory;
 
     private void Awake()
     {
@@ -24,6 +27,8 @@ public class PlayerBehavior : MonoBehaviour
 
         var interactAction = playerInput.actions["Interact"];
         interactAction.performed += OnInteract;
+
+        inventory = new Inventory(21);
     }
 
     private void OnDestroy()
@@ -67,6 +72,11 @@ public class PlayerBehavior : MonoBehaviour
                 GameManager.instance.tileManager.SetInteracted(position);
             }
         }
+
+        if (currentCollectable != null)
+        {
+            currentCollectable.TryCollect();
+        }
     }
 
     private void AnimateMovement(Vector3 direction)
@@ -81,5 +91,20 @@ public class PlayerBehavior : MonoBehaviour
             animator.SetFloat("horizontal", direction.x);
             animator.SetFloat("vertical", direction.y);
         }
+    }
+
+    public void SetCurrentCollectable(Collectable collactable)
+    {
+        currentCollectable = collactable;
+    }
+
+    public void DropItem(Collectable item)
+    {
+        Vector2 spawnLocation = transform.position;
+        Vector2 spawnOffset = Random.insideUnitCircle * 1.25f;
+
+        Collectable droppedItem = Instantiate(item, spawnLocation + spawnOffset, Quaternion.identity);
+    
+        droppedItem.rb2d.AddForce(spawnOffset * 2f, ForceMode2D.Impulse);
     }
 }
