@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 889993312713716652}
   - component: {fileID: 2879272431206391990}
   - component: {fileID: 4922638658632548731}
+  - component: {fileID: 1202486148896968477}
   m_Layer: 0
   m_Name: Collectable
   m_TagString: Untagged
@@ -172,9 +173,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f44e84283ef025b49aac7b341e77eee0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 1
-  icon: {fileID: -1053317177949828371, guid: 8fd967b2097f901429714b20b85fabb2, type: 3}
-  rb2d: {fileID: 0}
 --- !u!50 &4922638658632548731
 Rigidbody2D:
   serializedVersion: 5
@@ -202,3 +200,17 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
+--- !u!114 &1202486148896968477
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873732432411771691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4b2608b869214a845bc1f9f3a8429a4b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 8667b8af5734777448f3ad3ab1cf403a, type: 2}
+  rb2d: {fileID: 0}

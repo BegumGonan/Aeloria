@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9dcb84a1d3b5ccb479b0afcebff8abe8, type: 3}
+  m_Name: Pink_Mushroom
+  m_EditorClassIdentifier: 
+  itemName: Pink Mushroom
+  icon: {fileID: -1053317177949828371, guid: 8fd967b2097f901429714b20b85fabb2, type: 3}
