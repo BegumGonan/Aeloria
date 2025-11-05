@@ -65,7 +65,11 @@ public class PlayerBehavior : MonoBehaviour
             0
         );
 
-        if (GameManager.instance != null && GameManager.instance.tileManager != null)
+        if (currentCollectable != null)
+        {
+            currentCollectable.TryCollect();
+        }
+        else if (GameManager.instance != null && GameManager.instance.tileManager != null)
         {
             if (GameManager.instance.tileManager.IsInteractable(position))
             {
@@ -73,10 +77,6 @@ public class PlayerBehavior : MonoBehaviour
             }
         }
 
-        if (currentCollectable != null)
-        {
-            currentCollectable.TryCollect();
-        }
     }
 
     private void AnimateMovement(Vector3 direction)
