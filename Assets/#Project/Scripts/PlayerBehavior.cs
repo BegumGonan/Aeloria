@@ -26,7 +26,7 @@ public class PlayerBehavior : MonoBehaviour
         moveAction.canceled += OnMove;
         var interactAction = playerInput.actions["Interact"];
         interactAction.performed += OnInteract;
-        inventory = new Inventory(21);
+        inventory = new Inventory(27);
     }
    
     private void OnDestroy()
@@ -110,6 +110,14 @@ public class PlayerBehavior : MonoBehaviour
         Vector2 spawnOffset = Random.insideUnitCircle * 1.25f;
         Item droppedItem = Instantiate(item, spawnLocation + spawnOffset, Quaternion.identity);
         droppedItem.rb2d.AddForce(spawnOffset * 2f, ForceMode2D.Impulse);
+    }
+
+    public void DropItem(Item item, int numToDrop)
+    {
+        for (int i = 0; i < numToDrop; i++)
+        {
+            DropItem(item);
+        }
     }
 
     public void SetInventoryState(bool isOpen)

@@ -88,6 +88,17 @@ public class Inventory
         slots[index].RemoveItem();
     }
 
+    public void Remove(int index, int numToRemove)
+    {
+        if (Slots[index].Count >= numToRemove)
+        {
+            for (int i= 0; i < numToRemove; i++)
+            {
+                Remove(index);
+            }
+        }
+    }
+
     public int GetItemCount(Item item)
     {
         int total = 0;
