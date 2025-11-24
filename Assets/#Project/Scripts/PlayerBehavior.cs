@@ -119,7 +119,7 @@ public class PlayerBehavior : MonoBehaviour
         Vector2 spawnOffset = Random.insideUnitCircle * 1.25f;
 
         Item droppedItem = Instantiate(item.gameObject, spawnLocation + spawnOffset, Quaternion.identity).GetComponent<Item>();
-        
+        droppedItem.gameObject.SetActive(true); 
         if (droppedItem.rb2d != null)
             droppedItem.rb2d.AddForce(spawnOffset * 2f, ForceMode2D.Impulse);
     }

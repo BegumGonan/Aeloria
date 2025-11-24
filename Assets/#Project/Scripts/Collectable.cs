@@ -36,10 +36,10 @@ public class Collectable : MonoBehaviour
 
     public void TryCollect()
     {
-        if (isInRange && player != null && item != null)
+        if (gameObject.activeSelf && isInRange && player != null && item != null)
         {
             player.inventory.Add("Backpack", item);
-            Destroy(gameObject);
+            gameObject.SetActive(false);
         }
     }
 }
