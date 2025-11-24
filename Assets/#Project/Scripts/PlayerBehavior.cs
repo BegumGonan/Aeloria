@@ -16,6 +16,7 @@ public class PlayerBehavior : MonoBehaviour
     private PlayerInput playerInput;
     private Collectable currentCollectable;
     public InventoryManager inventory;
+    private TileManager tileManager;
     private bool isInventoryOpen = false;
 
     private void Awake()
@@ -31,7 +32,7 @@ public class PlayerBehavior : MonoBehaviour
 
         inventory = GetComponent<InventoryManager>();
     }
-   
+
     private void OnDestroy()
     {
         var moveAction = playerInput.actions["Move"];
@@ -40,7 +41,13 @@ public class PlayerBehavior : MonoBehaviour
         var interactAction = playerInput.actions["Interact"];
         interactAction.performed -= OnInteract;
     }
-   
+
+    private void Start()
+    {
+        tileManager = GameManager.instance.tileManager;
+        animator = GetComponentInChildren<Animator>();
+    }
+
     private void Update()
     {
         if (isInventoryOpen)
@@ -81,11 +88,17 @@ public class PlayerBehavior : MonoBehaviour
         {
             currentCollectable.TryCollect();
         }
-        else if (GameManager.instance != null && GameManager.instance.tileManager != null)
+        else if (GameManager.instance != null && tileManager != null)
         {
-            if (GameManager.instance.tileManager.IsInteractable(position))
+            string tileName = tileManager.GetTileName(position);
+
+            if (!string.IsNullOrWhiteSpace(tileName))
             {
-                GameManager.instance.tileManager.SetInteracted(position);
+                if(tileName == "Interactable" && inventory.toolbar.selectedSlot.itemName == "Hoe")
+                {
+                    tileManager.SetInteracted(position);
+                    animator.SetTrigger("isPlowing");
+                }
             }
         }
     }

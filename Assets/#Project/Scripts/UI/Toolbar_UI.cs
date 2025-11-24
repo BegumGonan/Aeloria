@@ -46,6 +46,8 @@ public class Toolbar_UI : MonoBehaviour
         currentIndex = index;
         selectedSlot = toolbarSlot[index];
         selectedSlot.SetHiglight(true);
+
+        GameManager.instance.player.inventory.toolbar.SelectedSlot(index);
     }
 
     public void SelectSlot1(InputAction.CallbackContext context) => SelectSlot(0);

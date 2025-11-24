@@ -60,23 +60,24 @@ public class Inventory
         }
 
         public void RemoveItem()
-    {
-        if (count > 0)
         {
-            count--;
-
-            if (count <= 0)
+            if (count > 0)
             {
-                icon = null;
-                itemName = "";
-                prefabItem = null;
+                count--;
+
+                if (count <= 0)
+                {
+                    icon = null;
+                    itemName = "";
+                    prefabItem = null;
+                }
             }
         }
-    }
     }
 
     [SerializeField] private List<Slot> slots = new List<Slot>();
     public IReadOnlyList<Slot> Slots => slots;
+    public Slot selectedSlot = null;
 
 
     public Inventory(int numSlots)
@@ -189,5 +190,13 @@ public class Inventory
             }
         }
         return total;
+    }
+
+    public void SelectedSlot(int index)
+    {
+        if (slots != null && slots.Count > 0)
+        {
+            selectedSlot = slots[index];
+        }
     }
 }
