@@ -5,6 +5,12 @@ public class Collectable : MonoBehaviour
 {
     private bool isInRange = false;
     private PlayerBehavior player;
+    private Item item;
+
+    private void Awake()
+    {
+        item = GetComponent<Item>();
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -30,9 +36,9 @@ public class Collectable : MonoBehaviour
 
     public void TryCollect()
     {
-        if (isInRange && player != null)
+        if (isInRange && player != null && item != null)
         {
-            player.inventory.Add(GetComponent<Item>());
+            player.inventory.Add("Backpack", item);
             Destroy(gameObject);
         }
     }

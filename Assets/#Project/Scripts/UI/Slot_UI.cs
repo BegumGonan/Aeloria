@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class Slot_UI : MonoBehaviour
 {
     public int slotID;
+    public Inventory inventory;
     public Image itemIcon;
     public TextMeshProUGUI quantityText;
 
@@ -14,9 +15,9 @@ public class Slot_UI : MonoBehaviour
     {
         if (slot != null)
         {
-            itemIcon.sprite = slot.Icon;
+            itemIcon.sprite = slot.icon;
             itemIcon.color = new Color(1, 1, 1, 1);
-            quantityText.text = slot.Count.ToString();
+            quantityText.text = slot.count.ToString();
         }
     }
 

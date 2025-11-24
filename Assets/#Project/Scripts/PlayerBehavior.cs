@@ -15,18 +15,21 @@ public class PlayerBehavior : MonoBehaviour
     private Vector3 movement;
     private PlayerInput playerInput;
     private Collectable currentCollectable;
-    public Inventory inventory;
+    public InventoryManager inventory;
     private bool isInventoryOpen = false;
 
     private void Awake()
     {
         playerInput = GetComponent<PlayerInput>();
+
         var moveAction = playerInput.actions["Move"];
         moveAction.performed += OnMove;
         moveAction.canceled += OnMove;
+
         var interactAction = playerInput.actions["Interact"];
         interactAction.performed += OnInteract;
-        inventory = new Inventory(27);
+
+        inventory = GetComponent<InventoryManager>();
     }
    
     private void OnDestroy()
@@ -106,10 +109,19 @@ public class PlayerBehavior : MonoBehaviour
 
     public void DropItem(Item item)
     {
+        if (item == null)
+        {
+            Debug.LogWarning("DropItem: item is null!");
+            return;
+        }
+
         Vector2 spawnLocation = transform.position;
         Vector2 spawnOffset = Random.insideUnitCircle * 1.25f;
-        Item droppedItem = Instantiate(item, spawnLocation + spawnOffset, Quaternion.identity);
-        droppedItem.rb2d.AddForce(spawnOffset * 2f, ForceMode2D.Impulse);
+
+        Item droppedItem = Instantiate(item.gameObject, spawnLocation + spawnOffset, Quaternion.identity).GetComponent<Item>();
+        
+        if (droppedItem.rb2d != null)
+            droppedItem.rb2d.AddForce(spawnOffset * 2f, ForceMode2D.Impulse);
     }
 
     public void DropItem(Item item, int numToDrop)
