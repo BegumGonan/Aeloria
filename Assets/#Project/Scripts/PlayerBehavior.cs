@@ -46,6 +46,14 @@ public class PlayerBehavior : MonoBehaviour
     {
         tileManager = GameManager.instance.tileManager;
         animator = GetComponentInChildren<Animator>();
+
+        Item hoeItem = GameManager.instance.itemManager.GetItemByName("Hoe");
+        inventory.Add("Toolbar", hoeItem);
+
+        Item wateringCanItem = GameManager.instance.itemManager.GetItemByName("WateringCan");
+        inventory.Add("Toolbar", wateringCanItem);
+
+        GameManager.instance.uiManager.RefreshAll();
     }
 
     private void Update()
