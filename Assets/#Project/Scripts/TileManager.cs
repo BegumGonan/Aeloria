@@ -4,8 +4,10 @@ using UnityEngine.Tilemaps;
 public class TileManager : MonoBehaviour
 {
     [SerializeField] private Tilemap interactableMap;
+    [SerializeField] private Tilemap wateredMap;
     [SerializeField] private TileBase hiddenInteractableMap;
     [SerializeField] private TileBase plowedTile;
+    [SerializeField] private TileBase wateredTile;
 
     void Start()
     {
@@ -22,6 +24,16 @@ public class TileManager : MonoBehaviour
     public void SetInteracted(Vector3Int position)
     {
         interactableMap.SetTile(position, plowedTile);
+    }
+
+    public void SetWatered(Vector3Int position)
+    {
+        TileBase currentTile = interactableMap.GetTile(position);
+
+        if (currentTile == plowedTile)
+        {
+            wateredMap.SetTile(position, wateredTile);
+        }
     }
 
     public string GetTileName(Vector3Int position)

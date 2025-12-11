@@ -2,7 +2,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerInput))]
-
 public class PlayerBehavior : MonoBehaviour
 {
     [Header("Movement")]
@@ -87,27 +86,34 @@ public class PlayerBehavior : MonoBehaviour
     private void OnInteract(InputAction.CallbackContext context)
     {
         if (isInventoryOpen) return;
+
         Vector3Int position = new Vector3Int(
             Mathf.FloorToInt(transform.position.x),
             Mathf.FloorToInt(transform.position.y),
             0
         );
+
         if (currentCollectable != null)
         {
             currentCollectable.TryCollect();
+            return;
         }
-        else if (GameManager.instance != null && tileManager != null)
-        {
-            string tileName = tileManager.GetTileName(position);
 
-            if (!string.IsNullOrWhiteSpace(tileName))
-            {
-                if(tileName == "Interactable" && inventory.toolbar.selectedSlot.itemName == "Hoe")
-                {
-                    tileManager.SetInteracted(position);
-                    animator.SetTrigger("isPlowing");
-                }
-            }
+        if (tileManager == null) return;
+
+        string tileName = tileManager.GetTileName(position);
+
+        if (string.IsNullOrWhiteSpace(tileName)) return;
+
+        if (tileName == "Interactable" && inventory.toolbar.selectedSlot.itemName == "Hoe")
+        {
+            tileManager.SetInteracted(position);
+            animator.SetTrigger("isPlowing");
+        }
+        else if (tileName == "soil" && inventory.toolbar.selectedSlot.itemName == "WateringCan")
+        {
+            tileManager.SetWatered(position);
+            animator.SetTrigger("isWatering");
         }
     }
 
