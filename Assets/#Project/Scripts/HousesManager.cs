@@ -98,10 +98,6 @@ public class HousesManager : MonoBehaviour
 
                 cameraBehavior.SetLimits(newMin, newMax);
             }
-            else
-            {
-                Debug.LogWarning("insideBoundsCollider veya cameraBehavior atanmadı!");
-            }
         }
         else
         {

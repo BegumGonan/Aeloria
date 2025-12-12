@@ -20,10 +20,6 @@ public class CameraBehavior : MonoBehaviour
         defaultMaxLimits = maxLimits;
 
         cam = GetComponent<Camera>();
-        if (cam == null)
-        {
-            Debug.LogError("CameraBehavior must be attached to a GameObject with a Camera component.");
-        }
     }
 
     void LateUpdate()
