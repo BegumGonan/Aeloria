@@ -112,6 +112,8 @@ public class PlayerBehavior : MonoBehaviour
         }
         else if (tileName == "soil" && inventory.toolbar.selectedSlot.itemName == "WateringCan")
         {
+            if (tileManager.IsSoilWatered(position)) return;
+
             tileManager.SetWatered(position);
             animator.SetTrigger("isWatering");
         }

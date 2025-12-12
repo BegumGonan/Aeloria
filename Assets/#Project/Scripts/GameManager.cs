@@ -6,6 +6,7 @@ public class GameManager : MonoBehaviour
     public TileManager tileManager;
     public ItemManager itemManager;
     public UI_Manager uiManager;
+    public TimeManager timeManager;
 
     public PlayerBehavior player;
 

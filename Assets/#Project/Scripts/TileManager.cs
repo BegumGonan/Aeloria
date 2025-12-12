@@ -49,4 +49,22 @@ public class TileManager : MonoBehaviour
         }
         return "";
     }
+
+    public bool IsSoilWatered(Vector3Int position)
+    {
+        if (wateredMap == null) return false;
+
+        return wateredMap.GetTile(position) != null;
+    }
+
+    public void DryAllSoil()
+    {
+        foreach (var pos in wateredMap.cellBounds.allPositionsWithin)
+        {
+            if (wateredMap.GetTile(pos) != null)
+            {
+                wateredMap.SetTile(pos, null);
+            }
+        }
+    }
 }
