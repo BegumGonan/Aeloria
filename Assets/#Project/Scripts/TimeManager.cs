@@ -49,6 +49,10 @@ public class TimeManager : MonoBehaviour
         timeStamp.day++;
         timeStamp.hour = 6;
         timeStamp.minute = 0;
+
+        DailySpawner spawner = Object.FindFirstObjectByType<DailySpawner>();
+        if (spawner != null)
+            spawner.StartNewDay();
     }
 
     public GameTimeStamp GetTime()

@@ -3,9 +3,9 @@ using UnityEngine.Tilemaps;
 
 public class TileManager : MonoBehaviour
 {
-    [SerializeField] private Tilemap interactableMap;
+    public Tilemap interactableMap;
+    public TileBase hiddenInteractableMap;
     [SerializeField] private Tilemap wateredMap;
-    [SerializeField] private TileBase hiddenInteractableMap;
     [SerializeField] private TileBase plowedTile;
     [SerializeField] private TileBase wateredTile;
 
