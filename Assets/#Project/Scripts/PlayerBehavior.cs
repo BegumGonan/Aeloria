@@ -16,6 +16,7 @@ public class PlayerBehavior : MonoBehaviour
     private Collectable currentCollectable;
     public InventoryManager inventory;
     private TileManager tileManager;
+    private TreeManager treeManager;
     private bool isInventoryOpen = false;
 
     private void Awake()
@@ -52,6 +53,9 @@ public class PlayerBehavior : MonoBehaviour
         Item wateringCanItem = GameManager.instance.itemManager.GetItemByName("WateringCan");
         inventory.Add("Toolbar", wateringCanItem);
 
+        Item axeItem = GameManager.instance.itemManager.GetItemByName("Axe");
+        inventory.Add("Toolbar", axeItem);
+
         GameManager.instance.uiManager.RefreshAll();
     }
 
@@ -87,17 +91,35 @@ public class PlayerBehavior : MonoBehaviour
     {
         if (isInventoryOpen) return;
 
-        Vector3Int position = new Vector3Int(
-            Mathf.FloorToInt(transform.position.x),
-            Mathf.FloorToInt(transform.position.y),
-            0
-        );
-
         if (currentCollectable != null)
         {
             currentCollectable.TryCollect();
             return;
         }
+
+        var selected = inventory.toolbar.selectedSlot;
+        string itemName = selected != null ? selected.itemName : "";
+
+        if (itemName == "Axe")
+        {
+            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 1.5f);
+            foreach (var hit in hits)
+            {
+                Tree tree = hit.GetComponent<Tree>();
+                if (tree != null)
+                {
+                    treeManager.HitTree();
+                    break;
+                }
+            }
+            return;
+        }
+
+        Vector3Int position = new Vector3Int(
+            Mathf.FloorToInt(transform.position.x),
+            Mathf.FloorToInt(transform.position.y),
+            0
+        );
 
         if (tileManager == null) return;
 
@@ -105,12 +127,12 @@ public class PlayerBehavior : MonoBehaviour
 
         if (string.IsNullOrWhiteSpace(tileName)) return;
 
-        if (tileName == "Interactable" && inventory.toolbar.selectedSlot.itemName == "Hoe")
+        if (tileName == "Interactable" && itemName == "Hoe")
         {
             tileManager.SetInteracted(position);
             animator.SetTrigger("isPlowing");
         }
-        else if (tileName == "soil" && inventory.toolbar.selectedSlot.itemName == "WateringCan")
+        else if (tileName == "soil" && itemName == "WateringCan")
         {
             if (tileManager.IsSoilWatered(position)) return;
 

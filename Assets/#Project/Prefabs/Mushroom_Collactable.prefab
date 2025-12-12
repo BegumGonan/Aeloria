@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 8539976266498430345}
   - component: {fileID: 7364282516442879256}
   - component: {fileID: 889993312713716652}
-  - component: {fileID: 2879272431206391990}
   - component: {fileID: 4922638658632548731}
   - component: {fileID: 1202486148896968477}
+  - component: {fileID: 2879272431206391990}
   m_Layer: 0
   m_Name: Mushroom_Collactable
   m_TagString: Untagged
@@ -161,18 +161,6 @@ EdgeCollider2D:
   m_AdjacentEndPoint: {x: 0, y: 0}
   m_UseAdjacentStartPoint: 0
   m_UseAdjacentEndPoint: 0
---- !u!114 &2879272431206391990
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 873732432411771691}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f44e84283ef025b49aac7b341e77eee0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!50 &4922638658632548731
 Rigidbody2D:
   serializedVersion: 5
@@ -214,3 +202,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 8667b8af5734777448f3ad3ab1cf403a, type: 2}
   rb2d: {fileID: 0}
+--- !u!114 &2879272431206391990
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 873732432411771691}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f44e84283ef025b49aac7b341e77eee0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

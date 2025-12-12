@@ -57,8 +57,11 @@ public class DailySpawner : MonoBehaviour
 
             Vector3Int cellPos = tileManager.interactableMap.WorldToCell(worldPos);
 
-            TileBase tile = tileManager.interactableMap.GetTile(cellPos);
-            if (tile == null)
+            TileBase interactableTile = tileManager.interactableMap.GetTile(cellPos);
+
+            TileBase waterTile = tileManager.waterMap.GetTile(cellPos);
+
+            if (interactableTile == null && waterTile == null)
             {
                 return tileManager.interactableMap.GetCellCenterWorld(cellPos);
             }

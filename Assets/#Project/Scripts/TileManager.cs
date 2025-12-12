@@ -5,6 +5,7 @@ public class TileManager : MonoBehaviour
 {
     public Tilemap interactableMap;
     public TileBase hiddenInteractableMap;
+    public Tilemap waterMap;
     [SerializeField] private Tilemap wateredMap;
     [SerializeField] private TileBase plowedTile;
     [SerializeField] private TileBase wateredTile;
