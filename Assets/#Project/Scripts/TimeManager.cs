@@ -53,6 +53,12 @@ public class TimeManager : MonoBehaviour
         DailySpawner spawner = Object.FindFirstObjectByType<DailySpawner>();
         if (spawner != null)
             spawner.StartNewDay();
+
+        TreeManager[] allTrees = Object.FindObjectsByType<TreeManager>(FindObjectsSortMode.None);
+        foreach (TreeManager tree in allTrees)
+        {
+            tree.CheckRespawn();
+        }
     }
 
     public GameTimeStamp GetTime()

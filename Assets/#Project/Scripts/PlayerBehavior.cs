@@ -9,14 +9,16 @@ public class PlayerBehavior : MonoBehaviour
 
     [Header("Animation")]
     [SerializeField] private Animator animator;
-    
+
+    [Header("Interaction")]
+    [SerializeField] private float interactRange = 1.5f;
+
     private Vector2 moveInput;
     private Vector3 movement;
     private PlayerInput playerInput;
     private Collectable currentCollectable;
     public InventoryManager inventory;
     private TileManager tileManager;
-    private TreeManager treeManager;
     private bool isInventoryOpen = false;
 
     private void Awake()
@@ -38,6 +40,7 @@ public class PlayerBehavior : MonoBehaviour
         var moveAction = playerInput.actions["Move"];
         moveAction.performed -= OnMove;
         moveAction.canceled -= OnMove;
+
         var interactAction = playerInput.actions["Interact"];
         interactAction.performed -= OnInteract;
     }
@@ -67,16 +70,17 @@ public class PlayerBehavior : MonoBehaviour
             AnimateMovement(Vector3.zero);
             return;
         }
+
         movement = new Vector3(moveInput.x, moveInput.y, 0f);
         AnimateMovement(movement);
     }
-   
+
     private void FixedUpdate()
     {
         if (isInventoryOpen) return;
         transform.position += movement * speed * Time.deltaTime;
     }
-   
+
     private void OnMove(InputAction.CallbackContext context)
     {
         if (isInventoryOpen)
@@ -84,9 +88,10 @@ public class PlayerBehavior : MonoBehaviour
             moveInput = Vector2.zero;
             return;
         }
+
         moveInput = context.ReadValue<Vector2>();
     }
-   
+
     private void OnInteract(InputAction.CallbackContext context)
     {
         if (isInventoryOpen) return;
@@ -97,18 +102,19 @@ public class PlayerBehavior : MonoBehaviour
             return;
         }
 
-        var selected = inventory.toolbar.selectedSlot;
-        string itemName = selected != null ? selected.itemName : "";
+        if (inventory.toolbar.selectedSlot == null) return;
 
-        if (itemName == "Axe")
+        string selectedItem = inventory.toolbar.selectedSlot.itemName;
+
+        if (selectedItem == "Axe")
         {
-            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, 1.5f);
+            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactRange);
             foreach (var hit in hits)
             {
-                Tree tree = hit.GetComponent<Tree>();
+                TreeManager tree = hit.GetComponentInParent<TreeManager>();
                 if (tree != null)
                 {
-                    treeManager.HitTree();
+                    tree.HitTree(this);
                     break;
                 }
             }
@@ -124,15 +130,14 @@ public class PlayerBehavior : MonoBehaviour
         if (tileManager == null) return;
 
         string tileName = tileManager.GetTileName(position);
-
         if (string.IsNullOrWhiteSpace(tileName)) return;
 
-        if (tileName == "Interactable" && itemName == "Hoe")
+        if (tileName == "Interactable" && selectedItem == "Hoe")
         {
             tileManager.SetInteracted(position);
             animator.SetTrigger("isPlowing");
         }
-        else if (tileName == "soil" && itemName == "WateringCan")
+        else if (tileName == "soil" && selectedItem == "WateringCan")
         {
             if (tileManager.IsSoilWatered(position)) return;
 
@@ -144,8 +149,10 @@ public class PlayerBehavior : MonoBehaviour
     private void AnimateMovement(Vector3 direction)
     {
         if (animator == null) return;
+
         bool isMoving = direction.magnitude > 0;
         animator.SetBool("isMoving", isMoving);
+
         if (isMoving)
         {
             animator.SetFloat("horizontal", direction.x);
@@ -169,8 +176,14 @@ public class PlayerBehavior : MonoBehaviour
         Vector2 spawnLocation = transform.position;
         Vector2 spawnOffset = Random.insideUnitCircle * 1.25f;
 
-        Item droppedItem = Instantiate(item.gameObject, spawnLocation + spawnOffset, Quaternion.identity).GetComponent<Item>();
-        droppedItem.gameObject.SetActive(true); 
+        Item droppedItem = Instantiate(
+            item.gameObject,
+            spawnLocation + spawnOffset,
+            Quaternion.identity
+        ).GetComponent<Item>();
+
+        droppedItem.gameObject.SetActive(true);
+
         if (droppedItem.rb2d != null)
             droppedItem.rb2d.AddForce(spawnOffset * 2f, ForceMode2D.Impulse);
     }
