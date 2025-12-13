@@ -17,6 +17,10 @@ public class DailySpawner : MonoBehaviour
     public Vector2 spawnAreaMin;
     public Vector2 spawnAreaMax;
 
+    [Header("Spawn Validation")]
+    public float paddingRadius = 1.0f; 
+    public LayerMask obstacleLayer; 
+
     private List<GameObject> spawnedItems = new List<GameObject>();
 
     public void StartNewDay()
@@ -58,15 +62,20 @@ public class DailySpawner : MonoBehaviour
             Vector3Int cellPos = tileManager.interactableMap.WorldToCell(worldPos);
 
             TileBase interactableTile = tileManager.interactableMap.GetTile(cellPos);
-
             TileBase waterTile = tileManager.waterMap.GetTile(cellPos);
 
             if (interactableTile == null && waterTile == null)
             {
-                return tileManager.interactableMap.GetCellCenterWorld(cellPos);
+                Vector3 cellCenterWorld = tileManager.interactableMap.GetCellCenterWorld(cellPos);
+
+                Collider2D obstacleHit = Physics2D.OverlapCircle(cellCenterWorld, paddingRadius, obstacleLayer);
+
+                if (obstacleHit == null)
+                {
+                    return cellCenterWorld;
+                }
             }
         }
-
         return Vector3.zero;
     }
 }

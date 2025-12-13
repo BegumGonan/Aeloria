@@ -327,7 +327,7 @@ Transform:
   m_GameObject: {fileID: 96779741}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.26, y: -4.74, z: 0}
+  m_LocalPosition: {x: 1.42, y: -4.74, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -15484,7 +15484,7 @@ GameObject:
   - component: {fileID: 691470099}
   - component: {fileID: 691470101}
   - component: {fileID: 691470100}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Water
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16556,7 +16556,7 @@ Tilemap:
       - {fileID: 2111274244, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
       - {fileID: -1776875914, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
       - {fileID: 1907936317, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
-      m_AnimationSpeed: 3.0000002
+      m_AnimationSpeed: 3
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -11, y: -15, z: 0}
@@ -16633,7 +16633,7 @@ Tilemap:
       - {fileID: 2111274244, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
       - {fileID: -1776875914, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
       - {fileID: 1907936317, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
-      m_AnimationSpeed: 3
+      m_AnimationSpeed: 3.0000002
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -4, y: -15, z: 0}
@@ -16666,7 +16666,7 @@ Tilemap:
       - {fileID: 2111274244, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
       - {fileID: -1776875914, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
       - {fileID: 1907936317, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
-      m_AnimationSpeed: 3.0000002
+      m_AnimationSpeed: 3
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -11, y: -14, z: 0}
@@ -16831,7 +16831,7 @@ Tilemap:
       - {fileID: 2111274244, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
       - {fileID: -1776875914, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
       - {fileID: 1907936317, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
-      m_AnimationSpeed: 3
+      m_AnimationSpeed: 3.0000002
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -7, y: -13, z: 0}
@@ -16842,7 +16842,7 @@ Tilemap:
       - {fileID: 2111274244, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
       - {fileID: -1776875914, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
       - {fileID: 1907936317, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
-      m_AnimationSpeed: 3.0000002
+      m_AnimationSpeed: 3
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -6, y: -13, z: 0}
@@ -16853,7 +16853,7 @@ Tilemap:
       - {fileID: 2111274244, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
       - {fileID: -1776875914, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
       - {fileID: 1907936317, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
-      m_AnimationSpeed: 3.0000002
+      m_AnimationSpeed: 3
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -5, y: -13, z: 0}
@@ -16897,7 +16897,7 @@ Tilemap:
       - {fileID: 2111274244, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
       - {fileID: -1776875914, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
       - {fileID: 1907936317, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
-      m_AnimationSpeed: 3
+      m_AnimationSpeed: 3.0000002
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -12, y: -12, z: 0}
@@ -17293,7 +17293,7 @@ Tilemap:
       - {fileID: 2111274244, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
       - {fileID: -1776875914, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
       - {fileID: 1907936317, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
-      m_AnimationSpeed: 3
+      m_AnimationSpeed: 3.0000002
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -9, y: -9, z: 0}
@@ -17337,7 +17337,7 @@ Tilemap:
       - {fileID: 2111274244, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
       - {fileID: -1776875914, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
       - {fileID: 1907936317, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
-      m_AnimationSpeed: 3
+      m_AnimationSpeed: 3.0000002
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -5, y: -9, z: 0}
@@ -17370,7 +17370,7 @@ Tilemap:
       - {fileID: 2111274244, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
       - {fileID: -1776875914, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
       - {fileID: 1907936317, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
-      m_AnimationSpeed: 3
+      m_AnimationSpeed: 3.0000002
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -2, y: -9, z: 0}
@@ -17469,7 +17469,7 @@ Tilemap:
       - {fileID: 2111274244, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
       - {fileID: -1776875914, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
       - {fileID: 1907936317, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
-      m_AnimationSpeed: 3.0000002
+      m_AnimationSpeed: 3
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -4, y: -8, z: 0}
@@ -17623,7 +17623,7 @@ Tilemap:
       - {fileID: 2111274244, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
       - {fileID: -1776875914, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
       - {fileID: 1907936317, guid: 1826dd96ce202494cab9d3c99c313912, type: 3}
-      m_AnimationSpeed: 3.0000002
+      m_AnimationSpeed: 3
       m_AnimationTimeOffset: 0
       m_Flags: 0
   m_TileAssetArray:
@@ -17688,7 +17688,7 @@ GameObject:
   m_Component:
   - component: {fileID: 742334599}
   - component: {fileID: 742334598}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player House
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17894,7 +17894,7 @@ GameObject:
   m_Component:
   - component: {fileID: 824650309}
   - component: {fileID: 824650310}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerHouse_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -17982,7 +17982,7 @@ GameObject:
   - component: {fileID: 831206027}
   - component: {fileID: 831206029}
   - component: {fileID: 831206028}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Entrance
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18302,7 +18302,7 @@ GameObject:
   - component: {fileID: 946824378}
   - component: {fileID: 946824380}
   - component: {fileID: 946824379}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Exit
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19634,7 +19634,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1700065608}
   - component: {fileID: 1700065609}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: PlayerHouse_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -19722,7 +19722,8 @@ GameObject:
   - component: {fileID: 1708950961}
   - component: {fileID: 1708950959}
   - component: {fileID: 1708950960}
-  m_Layer: 0
+  - component: {fileID: 1708950962}
+  m_Layer: 6
   m_Name: InteractableMap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -20568,6 +20569,60 @@ Transform:
   m_Children: []
   m_Father: {fileID: 419304716}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!68 &1708950962
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1708950958}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_EdgeRadius: 0
+  m_Points:
+  - {x: -2.4257522, y: -4.3356304}
+  - {x: -2.4335513, y: 0.22641802}
+  - {x: -2.1954656, y: 0.47069937}
+  - {x: 8.994854, y: 0.439456}
+  - {x: 9.432512, y: 0.2809493}
+  - {x: 9.428355, y: -7.24211}
+  - {x: 9.161092, y: -7.426604}
+  - {x: -0.24568558, y: -7.4453897}
+  - {x: -0.4465774, y: -7.28021}
+  - {x: -0.4343952, y: -4.7897363}
+  - {x: -0.7410914, y: -4.4052672}
+  - {x: -2.1055753, y: -4.441181}
+  - {x: -2.4123533, y: -4.300813}
+  m_AdjacentStartPoint: {x: 0, y: 0}
+  m_AdjacentEndPoint: {x: 0, y: 0}
+  m_UseAdjacentStartPoint: 0
+  m_UseAdjacentEndPoint: 0
 --- !u!1 &1716092204
 GameObject:
   m_ObjectHideFlags: 0
@@ -20863,7 +20918,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   backpackSlotCount: 27
   toolbar:
     slots: []
@@ -20872,7 +20926,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   toolbarSlotCount: 9
 --- !u!1 &1728585020
 GameObject:
@@ -21781,6 +21834,10 @@ MonoBehaviour:
   tileManager: {fileID: 1971331887}
   spawnAreaMin: {x: -5.7, y: -15.5}
   spawnAreaMax: {x: 13.71, y: 7.5}
+  paddingRadius: 1
+  obstacleLayer:
+    serializedVersion: 2
+    m_Bits: 64
 --- !u!1 &1991353673
 GameObject:
   m_ObjectHideFlags: 0

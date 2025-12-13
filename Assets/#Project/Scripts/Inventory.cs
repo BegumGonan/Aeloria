@@ -11,7 +11,6 @@ public class Inventory
         public int maxAllowed = 99;
         public Sprite icon;
         public string itemName;
-        public Item prefabItem;
 
         public Slot()
         {
@@ -19,7 +18,6 @@ public class Inventory
             count = 0;
             maxAllowed = 99;
             icon = null;
-            prefabItem = null;
         }
 
         public bool IsEmpty
@@ -47,7 +45,6 @@ public class Inventory
         {
             this.itemName = item.data.itemName;
             this.icon = item.data.icon;
-            this.prefabItem = item;
             count++;
         }
 
@@ -69,7 +66,6 @@ public class Inventory
                 {
                     icon = null;
                     itemName = "";
-                    prefabItem = null;
                 }
             }
         }
@@ -94,7 +90,7 @@ public class Inventory
         {
             if (slot.itemName == item.data.itemName && slot.CanAddItem(item.data.itemName))
             {
-                slot.AddItem(item);
+                slot.AddItem(item.data.itemName, item.data.icon, slot.maxAllowed);
                 return;
             }
         }
@@ -126,7 +122,7 @@ public class Inventory
         }
     }
     
-    public void MoveSlot(int fromIndex, int toIndex, Inventory toInventory)
+    public void MoveSlot(int fromIndex, int toIndex, Inventory toInventory, int numToMove)
     {
         if (fromIndex < 0 || fromIndex >= slots.Count)
         {
@@ -149,25 +145,17 @@ public class Inventory
 
         if (fromSlot.IsEmpty) return;
 
-        int toMove = Inventory_UI.dragSingleForThisDrag ? 1 : fromSlot.count;
+        int actualToMove = Mathf.Min(numToMove, fromSlot.count); 
 
-        for (int i = 0; i < toMove; i++)
+        for (int i = 0; i < actualToMove; i++) 
         {
             if (toSlot.IsEmpty)
             {
                 toSlot.AddItem(fromSlot.itemName, fromSlot.icon, fromSlot.maxAllowed);
-                if (fromSlot.prefabItem != null)
-                    toSlot.prefabItem = fromSlot.prefabItem;
             }
             else if (toSlot.CanAddItem(fromSlot.itemName))
             {
-                if (fromSlot.prefabItem != null)
-                    toSlot.AddItem(fromSlot.prefabItem);
-                else
-                    toSlot.AddItem(fromSlot.itemName, fromSlot.icon, fromSlot.maxAllowed);
-
-                if (toSlot.prefabItem == null && fromSlot.prefabItem != null)
-                    toSlot.prefabItem = fromSlot.prefabItem;
+                toSlot.AddItem(fromSlot.itemName, fromSlot.icon, fromSlot.maxAllowed);
             }
             else
             {

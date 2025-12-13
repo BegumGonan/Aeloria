@@ -86,9 +86,25 @@ public class Inventory_UI : MonoBehaviour
         if (sourceIndex < 0 || sourceIndex >= sourceInventory.Slots.Count) return;
 
         var slot = sourceInventory.Slots[sourceIndex];
-        Item itemToDrop = slot.prefabItem;
 
-        GameManager.instance.player.DropItem(itemToDrop, countToDrop);
+        string itemName = slot.itemName;
+
+        if (string.IsNullOrEmpty(itemName))
+        {
+             UI_Manager.draggedSlot = null;
+             return;
+        }
+
+        Item itemToDropPrefab = GameManager.instance.itemManager.GetItemByName(itemName);
+        
+        if (itemToDropPrefab == null)
+        {
+             UI_Manager.draggedSlot = null;
+             return;
+        }
+
+        GameManager.instance.player.DropItem(itemToDropPrefab, countToDrop);
+        
         sourceInventory.Remove(sourceIndex, countToDrop);
         GameManager.instance.uiManager.RefreshAll();
 
@@ -133,11 +149,11 @@ public class Inventory_UI : MonoBehaviour
                 canvas.renderMode == RenderMode.ScreenSpaceCamera ? canvas.worldCamera : null
             );
 
-            Debug.Log("PointerOutsideInventory: " + pointerOutside);
-
             if (pointerOutside)
             {
-                int countToDrop = UI_Manager.dragSingle ? 1 : UI_Manager.draggedSlot.inventory.Slots[UI_Manager.draggedSlot.slotID].count;
+                int countInSlot = UI_Manager.draggedSlot.inventory.Slots[UI_Manager.draggedSlot.slotID].count;
+                int countToDrop = dragSingleForThisDrag ? 1 : countInSlot; 
+                
                 Remove(countToDrop);
             }
         }
@@ -156,13 +172,10 @@ public class Inventory_UI : MonoBehaviour
         Inventory destInventory = slot.inventory;
         int toIndex = slot.slotID;
 
-        if (sourceInventory == null)
-        {
-            Debug.LogWarning("SlotDrop: sourceInventory is null");
-            return;
-        }
+        int countInSlot = sourceInventory.Slots[fromIndex].count;
+        int numToMove = dragSingleForThisDrag ? 1 : countInSlot; 
 
-        sourceInventory.MoveSlot(fromIndex, toIndex, destInventory);
+        sourceInventory.MoveSlot(fromIndex, toIndex, destInventory, numToMove);
         GameManager.instance.uiManager.RefreshAll();
     }
 

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -165,19 +166,19 @@ public class PlayerBehavior : MonoBehaviour
         currentCollectable = collactable;
     }
 
-    public void DropItem(Item item)
+    public void DropItemFromInventory(string itemName)
     {
-        if (item == null)
-        {
-            Debug.LogWarning("DropItem: item is null!");
-            return;
-        }
+        Item itemPrefab = GameManager.instance.itemManager.GetItemByName(itemName);
+        DropSingleItem(itemPrefab); 
+    }
 
+    private void DropSingleItem(Item itemPrefab)
+    {
         Vector2 spawnLocation = transform.position;
         Vector2 spawnOffset = Random.insideUnitCircle * 1.25f;
 
         Item droppedItem = Instantiate(
-            item.gameObject,
+            itemPrefab.gameObject,
             spawnLocation + spawnOffset,
             Quaternion.identity
         ).GetComponent<Item>();
@@ -187,12 +188,17 @@ public class PlayerBehavior : MonoBehaviour
         if (droppedItem.rb2d != null)
             droppedItem.rb2d.AddForce(spawnOffset * 2f, ForceMode2D.Impulse);
     }
+    
+    public void DropItem(Item item)
+    {
+        DropSingleItem(item);
+    }
 
     public void DropItem(Item item, int numToDrop)
     {
         for (int i = 0; i < numToDrop; i++)
         {
-            DropItem(item);
+            DropSingleItem(item);
         }
     }
 

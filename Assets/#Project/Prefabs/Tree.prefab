@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3176199151953699035}
   - component: {fileID: 380420639370260367}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Interaction
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -89,7 +89,7 @@ GameObject:
   - component: {fileID: 8127485563402459847}
   - component: {fileID: 8365859730863419473}
   - component: {fileID: 9168467770119136222}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Tree
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -204,7 +204,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5082061988493387699}
   - component: {fileID: 618549906680113436}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: StumpCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -282,7 +282,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2375353405414131121}
   - component: {fileID: 7326514801077190085}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: TreeCollider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
