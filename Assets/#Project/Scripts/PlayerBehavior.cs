@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -110,14 +109,23 @@ public class PlayerBehavior : MonoBehaviour
         if (selectedItem == "Axe")
         {
             Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactRange);
+            
+            bool hitTree = false;
+
             foreach (var hit in hits)
             {
                 TreeManager tree = hit.GetComponentInParent<TreeManager>();
                 if (tree != null)
                 {
                     tree.HitTree(this);
+                    hitTree = true;
                     break;
                 }
+            }
+
+            if (hitTree)
+            {
+                animator.SetTrigger("isChopping");
             }
             return;
         }
@@ -169,6 +177,7 @@ public class PlayerBehavior : MonoBehaviour
     public void DropItemFromInventory(string itemName)
     {
         Item itemPrefab = GameManager.instance.itemManager.GetItemByName(itemName);
+        
         DropSingleItem(itemPrefab); 
     }
 

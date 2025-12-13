@@ -124,22 +124,6 @@ public class Inventory
     
     public void MoveSlot(int fromIndex, int toIndex, Inventory toInventory, int numToMove)
     {
-        if (fromIndex < 0 || fromIndex >= slots.Count)
-        {
-            Debug.LogWarning($"MoveSlot: fromIndex out of range: {fromIndex} (slots.Count={slots.Count})");
-            return;
-        }
-        if (toInventory == null)
-        {
-            Debug.LogWarning("MoveSlot: toInventory is null");
-            return;
-        }
-        if (toIndex < 0 || toIndex >= toInventory.slots.Count)
-        {
-            Debug.LogWarning($"MoveSlot: toIndex out of range: {toIndex} (toInventory.slots.Count={toInventory.slots.Count})");
-            return;
-        }
-
         Slot fromSlot = slots[fromIndex];
         Slot toSlot = toInventory.slots[toIndex];
 
