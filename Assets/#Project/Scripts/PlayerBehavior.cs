@@ -118,7 +118,7 @@ public class PlayerBehavior : MonoBehaviour
                 if (tree != null)
                 {
                     tree.HitTree(this);
-                    hitTree = true;
+                    hitTree = true; 
                     break;
                 }
             }
@@ -184,7 +184,7 @@ public class PlayerBehavior : MonoBehaviour
     private void DropSingleItem(Item itemPrefab)
     {
         Vector2 spawnLocation = transform.position;
-        Vector2 spawnOffset = Random.insideUnitCircle * 1.25f;
+        Vector2 spawnOffset = Random.insideUnitCircle * 1.25f; 
 
         Item droppedItem = Instantiate(
             itemPrefab.gameObject,
@@ -195,7 +195,13 @@ public class PlayerBehavior : MonoBehaviour
         droppedItem.gameObject.SetActive(true);
 
         if (droppedItem.rb2d != null)
-            droppedItem.rb2d.AddForce(spawnOffset * 2f, ForceMode2D.Impulse);
+        {
+            float dropForceMultiplier = 0.6f;
+            droppedItem.rb2d.linearDamping = 5.0f;     
+            droppedItem.rb2d.angularDamping = 1.0f;
+
+            droppedItem.rb2d.AddForce(spawnOffset * dropForceMultiplier, ForceMode2D.Impulse);
+        }
     }
     
     public void DropItem(Item item)
