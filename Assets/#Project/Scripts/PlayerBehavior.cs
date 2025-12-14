@@ -59,6 +59,13 @@ public class PlayerBehavior : MonoBehaviour
         Item axeItem = GameManager.instance.itemManager.GetItemByName("Axe");
         inventory.Add("Toolbar", axeItem);
 
+        Item seedItem = GameManager.instance.itemManager.GetItemByName("Valerian Seed"); 
+        if (seedItem != null)
+        {
+             for(int i = 0; i < 10; i++)
+                 inventory.Add("Backpack", seedItem);
+        }
+
         GameManager.instance.uiManager.RefreshAll();
     }
 
@@ -141,6 +148,28 @@ public class PlayerBehavior : MonoBehaviour
         string tileName = tileManager.GetTileName(position);
         if (string.IsNullOrWhiteSpace(tileName)) return;
 
+        if (tileManager.IsCropReadyToHarvest(position))
+        {
+            TryHarvest(position);
+            return;
+        }
+
+        if (tileName == "soil" && tileManager.GetCropTile(position) == null)
+        {
+            ItemData selectedItemData = GameManager.instance.itemManager.GetItemByName(selectedItem).data;
+            CropData cropData = selectedItemData.cropData;
+
+            if (cropData != null) 
+            {
+                if (inventory.toolbar.TryRemoveSingleItem(selectedItem))
+                {
+                    tileManager.PlantCrop(position, cropData);
+                    GameManager.instance.uiManager.RefreshAll();
+                    return;
+                }
+            }
+        }
+        
         if (tileName == "Interactable" && selectedItem == "Hoe")
         {
             tileManager.SetInteracted(position);
@@ -168,6 +197,22 @@ public class PlayerBehavior : MonoBehaviour
             animator.SetFloat("vertical", direction.y);
         }
     }
+    
+    private void TryHarvest(Vector3Int position)
+    {
+        CropTile cropTile = tileManager.GetCropTile(position); 
+
+        if (cropTile != null && cropTile.cropData != null && cropTile.cropData.grownItemPrefab != null)
+        {
+            Item grownItem = cropTile.cropData.grownItemPrefab;
+            inventory.Add("Backpack", grownItem); 
+            
+            tileManager.ClearCrop(position);
+            
+            GameManager.instance.uiManager.RefreshAll();
+        }
+    }
+
 
     public void SetCurrentCollectable(Collectable collactable)
     {
@@ -196,9 +241,9 @@ public class PlayerBehavior : MonoBehaviour
 
         if (droppedItem.rb2d != null)
         {
-            float dropForceMultiplier = 0.6f;
+            float dropForceMultiplier = 0.5f;
             droppedItem.rb2d.linearDamping = 5.0f;     
-            droppedItem.rb2d.angularDamping = 1.0f;
+            droppedItem.rb2d.angularDamping = 1.0f; 
 
             droppedItem.rb2d.AddForce(spawnOffset * dropForceMultiplier, ForceMode2D.Impulse);
         }

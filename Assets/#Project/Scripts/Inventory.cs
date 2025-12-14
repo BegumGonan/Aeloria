@@ -74,8 +74,7 @@ public class Inventory
     [SerializeField] private List<Slot> slots = new List<Slot>();
     public IReadOnlyList<Slot> Slots => slots;
     public Slot selectedSlot = null;
-
-
+    
     public Inventory(int numSlots)
     {
         for (int i = 0; i < numSlots; i++)
@@ -122,6 +121,20 @@ public class Inventory
         }
     }
     
+    public bool TryRemoveSingleItem(string itemName)
+    {
+        foreach (Slot slot in slots)
+        {
+            if (slot.itemName == itemName && slot.count > 0)
+            {
+                slot.RemoveItem();
+                return true;
+            }
+        }
+        return false;
+    }
+
+
     public void MoveSlot(int fromIndex, int toIndex, Inventory toInventory, int numToMove)
     {
         Slot fromSlot = slots[fromIndex];

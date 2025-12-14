@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4d2a55a45e99704d871826b59b24755, type: 3}
+  m_Name: Valerian
+  m_EditorClassIdentifier: 
+  itemName: 
+  icon: {fileID: 0}
+  cropData: {fileID: 0}
+  seedName: Valerian Seed
+  grownItemPrefab: {fileID: 7023034823423364490, guid: a01a45efcb9fa834a91ac3c76a748a2a, type: 3}
+  daysToGrow: 5
+  growthStages:
+  - {fileID: 11400000, guid: 10a5cce5f8e4d4242b68b2d4858229f4, type: 2}
+  - {fileID: 11400000, guid: bf016a3d527e4e24b95daed3ef6c37e0, type: 2}
+  - {fileID: 11400000, guid: c4b2a795718b1fc46a5b1cf032098890, type: 2}
+  - {fileID: 11400000, guid: 2735b7779eef3fd40b61b82afd5ad502, type: 2}
+  - {fileID: 11400000, guid: 613ca56e91dcd49458ea721dafb99b0f, type: 2}

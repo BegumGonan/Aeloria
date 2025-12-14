@@ -59,6 +59,12 @@ public class TimeManager : MonoBehaviour
         {
             tree.CheckRespawn();
         }
+        
+        if (GameManager.instance.tileManager != null)
+        {
+            GameManager.instance.tileManager.AdvanceCropsDay();
+            GameManager.instance.tileManager.DryAllSoil();
+        }
     }
 
     public GameTimeStamp GetTime()
