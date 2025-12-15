@@ -655,6 +655,7 @@ RectTransform:
   - {fileID: 4891521166550275876}
   - {fileID: 6527953718598804311}
   - {fileID: 2575145102531409162}
+  - {fileID: 6484647414637194894}
   m_Father: {fileID: 839703310139916877}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -824,7 +825,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 4141128169534210149}
   quantityText: {fileID: 6903570153285241037}
   highlight: {fileID: 0}
@@ -1320,7 +1320,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 4334234456276258391}
   quantityText: {fileID: 6525747871883970303}
   highlight: {fileID: 0}
@@ -2112,7 +2111,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 2646167528670140288}
   quantityText: {fileID: 4760099212697509672}
   highlight: {fileID: 8345734149187865382}
@@ -2308,7 +2306,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 2972899240253565861}
   quantityText: {fileID: 5762226259059450637}
   highlight: {fileID: 0}
@@ -2488,7 +2485,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 3010666224021697840}
   quantityText: {fileID: 5728119824377806232}
   highlight: {fileID: 0}
@@ -2670,7 +2666,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 2934447307307854123}
   quantityText: {fileID: 5624738769976598915}
   highlight: {fileID: 9210516418164012429}
@@ -3960,7 +3955,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 3356255277255759612}
   quantityText: {fileID: 5198708950524042836}
   highlight: {fileID: 0}
@@ -4908,7 +4902,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 1866578147744266050}
   quantityText: {fileID: 9174180663869358058}
   highlight: {fileID: 0}
@@ -5955,6 +5948,81 @@ MonoBehaviour:
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!1 &3540587203104795259
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6484647414637194894}
+  - component: {fileID: 5734932227937116354}
+  - component: {fileID: 6356025144156604455}
+  m_Layer: 5
+  m_Name: Energy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &6484647414637194894
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3540587203104795259}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 3327471690282073149}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -829.04, y: -490}
+  m_SizeDelta: {x: 261.916, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &5734932227937116354
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3540587203104795259}
+  m_CullTransparentMesh: 1
+--- !u!114 &6356025144156604455
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3540587203104795259}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: -2886873517128288709, guid: 586a9211277954c4bb9b37da922d29e6, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
 --- !u!1 &3576575754084874819
 GameObject:
   m_ObjectHideFlags: 0
@@ -6190,7 +6258,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 147351637211069768}
   quantityText: {fileID: 7259004164631737824}
   highlight: {fileID: 0}
@@ -6445,7 +6512,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 554512476008176113}
   quantityText: {fileID: 6990800980010881369}
   highlight: {fileID: 0}
@@ -6899,7 +6965,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 600480546941994939}
   quantityText: {fileID: 7990234267089080083}
   highlight: {fileID: 6863000146166979357}
@@ -7097,7 +7162,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 625465794752993823}
   quantityText: {fileID: 7933178193267511991}
   highlight: {fileID: 6900933509189650105}
@@ -7445,7 +7509,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 989534320426170316}
   quantityText: {fileID: 7714066257178410852}
   highlight: {fileID: 6543901361152535402}
@@ -7641,7 +7704,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 979237763366685040}
   quantityText: {fileID: 7719352099231990232}
   highlight: {fileID: 0}
@@ -8245,7 +8307,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 8073180161949650184}
   quantityText: {fileID: 1639280363173856672}
   highlight: {fileID: 2838007943297978798}
@@ -8577,7 +8638,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 8099070143124916457}
   quantityText: {fileID: 1644934511371468865}
   highlight: {fileID: 0}
@@ -9100,7 +9160,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 8323533606482155000}
   quantityText: {fileID: 1528259506014264656}
   highlight: {fileID: 0}
@@ -9988,7 +10047,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 8683256571283906703}
   quantityText: {fileID: 2177289775705827367}
   highlight: {fileID: 0}
@@ -10168,7 +10226,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 9187323631174589090}
   quantityText: {fileID: 1858219120601567754}
   highlight: {fileID: 0}
@@ -10573,7 +10630,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 6981418321993702180}
   quantityText: {fileID: 456179277816894348}
   highlight: {fileID: 0}
@@ -10964,7 +11020,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 7132296743536441816}
   quantityText: {fileID: 309996595591983472}
   highlight: {fileID: 0}
@@ -11627,7 +11682,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 7244886826589421849}
   quantityText: {fileID: 161378020697311665}
   highlight: {fileID: 0}
@@ -11807,7 +11861,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 7446100305295661464}
   quantityText: {fileID: 136104823583822128}
   highlight: {fileID: 0}
@@ -12133,7 +12186,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 7417525083453470038}
   quantityText: {fileID: 19705001139387902}
   highlight: {fileID: 0}
@@ -12905,7 +12957,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 6038671132620183928}
   quantityText: {fileID: 3853952348770947536}
   highlight: {fileID: 0}
@@ -13087,7 +13138,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 5934108979230253009}
   quantityText: {fileID: 3813536192356718457}
   highlight: {fileID: 374118763324736375}
@@ -13358,7 +13408,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 5971269475066097862}
   quantityText: {fileID: 3776377861453101166}
   highlight: {fileID: 0}
@@ -13899,7 +13948,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 6114561855624836516}
   quantityText: {fileID: 3633595417798049036}
   highlight: {fileID: 0}
@@ -14079,7 +14127,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 6293440267973963550}
   quantityText: {fileID: 3594044915602368438}
   highlight: {fileID: 0}
@@ -14395,7 +14442,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 6417883005935022005}
   quantityText: {fileID: 4586547662022043421}
   highlight: {fileID: 0}
@@ -14922,7 +14968,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 6686971829566598028}
   quantityText: {fileID: 4213877386990674724}
   highlight: {fileID: 0}
@@ -15449,7 +15494,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 4742690655953104808}
   quantityText: {fileID: 2839302263155664640}
   highlight: {fileID: 0}
@@ -16537,7 +16581,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 5341773703081637157}
   quantityText: {fileID: 3213209185794211213}
   highlight: {fileID: 2110738265082046851}
@@ -16735,7 +16778,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 5370704097014312388}
   quantityText: {fileID: 3188201849349530988}
   highlight: {fileID: 2153707221420863842}
@@ -17006,7 +17048,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 5615216989420358296}
   quantityText: {fileID: 3124113042390811184}
   highlight: {fileID: 0}
@@ -17261,7 +17302,6 @@ MonoBehaviour:
       maxAllowed: 99
       icon: {fileID: 0}
       itemName: 
-      prefabItem: {fileID: 0}
   itemIcon: {fileID: 5528424640803364863}
   quantityText: {fileID: 3030569266222258007}
   highlight: {fileID: 0}

@@ -13,6 +13,16 @@ public class BedInteract : MonoBehaviour
     [SerializeField] private InputActionReference interactAction;
 
     private bool playerNear = false;
+    private PlayerEnergy playerEnergy; 
+
+    private void Start() 
+    {
+        PlayerBehavior player = Object.FindFirstObjectByType<PlayerBehavior>();
+        if (player != null)
+        {
+            playerEnergy = player.GetComponent<PlayerEnergy>();
+        }
+    }
 
     private void OnEnable()
     {
@@ -36,6 +46,8 @@ public class BedInteract : MonoBehaviour
     {
         yield return StartCoroutine(Fade(0f, 1f));
 
+        playerEnergy?.ResetEnergy(); 
+        
         GameManager.instance.timeManager.StartNewDay();
 
         GameManager.instance.tileManager.DryAllSoil();

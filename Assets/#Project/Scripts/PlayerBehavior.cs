@@ -5,7 +5,7 @@ using UnityEngine.InputSystem;
 public class PlayerBehavior : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] private float speed = 5f;
+    public float speed = 5f;
 
     [Header("Animation")]
     [SerializeField] private Animator animator;
@@ -20,6 +20,7 @@ public class PlayerBehavior : MonoBehaviour
     public InventoryManager inventory;
     private TileManager tileManager;
     private bool isInventoryOpen = false;
+    private PlayerEnergy playerEnergy; 
 
     private void Awake()
     {
@@ -33,6 +34,8 @@ public class PlayerBehavior : MonoBehaviour
         interactAction.performed += OnInteract;
 
         inventory = GetComponent<InventoryManager>();
+        
+        playerEnergy = GetComponent<PlayerEnergy>();
     }
 
     private void OnDestroy()
@@ -49,7 +52,7 @@ public class PlayerBehavior : MonoBehaviour
     {
         tileManager = GameManager.instance.tileManager;
         animator = GetComponentInChildren<Animator>();
-
+        
         Item hoeItem = GameManager.instance.itemManager.GetItemByName("Hoe");
         inventory.Add("Toolbar", hoeItem);
 
@@ -62,8 +65,8 @@ public class PlayerBehavior : MonoBehaviour
         Item seedItem = GameManager.instance.itemManager.GetItemByName("Valerian Seed"); 
         if (seedItem != null)
         {
-             for(int i = 0; i < 10; i++)
-                 inventory.Add("Backpack", seedItem);
+            for(int i = 0; i < 10; i++)
+                inventory.Add("Backpack", seedItem);
         }
 
         GameManager.instance.uiManager.RefreshAll();
@@ -103,6 +106,11 @@ public class PlayerBehavior : MonoBehaviour
     {
         if (isInventoryOpen) return;
 
+        if (!playerEnergy.HasEnergy) 
+        {
+            return;
+        }
+
         if (currentCollectable != null)
         {
             currentCollectable.TryCollect();
@@ -133,6 +141,7 @@ public class PlayerBehavior : MonoBehaviour
             if (hitTree)
             {
                 animator.SetTrigger("isChopping");
+                playerEnergy.ConsumeEnergy();
             }
             return;
         }
@@ -174,6 +183,7 @@ public class PlayerBehavior : MonoBehaviour
         {
             tileManager.SetInteracted(position);
             animator.SetTrigger("isPlowing");
+            playerEnergy.ConsumeEnergy();
         }
         else if (tileName == "soil" && selectedItem == "WateringCan")
         {
@@ -181,6 +191,7 @@ public class PlayerBehavior : MonoBehaviour
 
             tileManager.SetWatered(position);
             animator.SetTrigger("isWatering");
+            playerEnergy.ConsumeEnergy();
         }
     }
 
@@ -213,7 +224,6 @@ public class PlayerBehavior : MonoBehaviour
         }
     }
 
-
     public void SetCurrentCollectable(Collectable collactable)
     {
         currentCollectable = collactable;
@@ -222,7 +232,6 @@ public class PlayerBehavior : MonoBehaviour
     public void DropItemFromInventory(string itemName)
     {
         Item itemPrefab = GameManager.instance.itemManager.GetItemByName(itemName);
-        
         DropSingleItem(itemPrefab); 
     }
 

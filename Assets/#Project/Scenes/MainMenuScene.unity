@@ -1116,8 +1116,8 @@ MonoBehaviour:
   fadePanel: {fileID: 623595806}
   transitionTime: 1
   gameSceneName: GameScene
-  menuMusic: {fileID: 0}
-  musicFadeOutDuration: 1
+  menuMusic: {fileID: 37435195}
+  musicFadeOutDuration: 2
 --- !u!4 &1400856033
 Transform:
   m_ObjectHideFlags: 0
