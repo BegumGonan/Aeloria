@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class CauldronManager : MonoBehaviour
 {
@@ -9,14 +11,36 @@ public class CauldronManager : MonoBehaviour
     [Header("Current Brew")]
     public PotionData currentPotion;
     private float brewTimer;
+    private float animationTimer;
+    private int currentAnimationIndex;
 
-    [Header("References")]
+    [Header("Tile References")]
+    public Tilemap cauldronTilemap;
+    public Tile idleTile;
+    public List<Tile> brewingTiles;
+    public Tile readyTile;
+
+    [Header("Spawn Settings")]
+    public Transform potionSpawnPoint;
+    private GameObject currentVisual;
+
+    private Vector3Int tilePos;
     private InventoryManager playerInventory;
     private TimeManager timeManager;
+    public float animationSpeed = 0.25f;
 
     private void Start()
     {
         timeManager = GameManager.instance.timeManager;
+        foreach (var pos in cauldronTilemap.cellBounds.allPositionsWithin)
+        {
+            if (cauldronTilemap.GetTile(pos) != null)
+            {
+                tilePos = pos;
+                break;
+            }
+        }
+        cauldronTilemap.SetTile(tilePos, idleTile);
     }
 
     private void Update()
@@ -24,10 +48,16 @@ public class CauldronManager : MonoBehaviour
         if (!isBrewing || potionReady) return;
 
         brewTimer += Time.deltaTime * timeManager.timeSpeed;
+        animationTimer += Time.deltaTime;
 
-        float targetMinutes = currentPotion.brewTimeInGameHours * 60f;
+        if (animationTimer >= animationSpeed)
+        {
+            animationTimer = 0f;
+            currentAnimationIndex = (currentAnimationIndex + 1) % brewingTiles.Count;
+            cauldronTilemap.SetTile(tilePos, brewingTiles[currentAnimationIndex]);
+        }
 
-        if (brewTimer >= targetMinutes)
+        if (brewTimer >= (currentPotion.brewTimeInGameHours * 60f))
         {
             FinishPotion();
         }
@@ -37,12 +67,9 @@ public class CauldronManager : MonoBehaviour
     {
         foreach (var ingredient in potion.ingredients)
         {
-            int count =
-                inventory.backpack.GetItemCount(ingredient.item) +
-                inventory.toolbar.GetItemCount(ingredient.item);
-
-            if (count < ingredient.amount)
-                return false;
+            int count = inventory.backpack.GetItemCount(ingredient.item) +
+                        inventory.toolbar.GetItemCount(ingredient.item);
+            if (count < ingredient.amount) return false;
         }
         return true;
     }
@@ -50,13 +77,12 @@ public class CauldronManager : MonoBehaviour
     public void StartPotion(PotionData potion, InventoryManager inventory)
     {
         if (isBrewing) return;
-
         currentPotion = potion;
         playerInventory = inventory;
-
         ConsumeIngredients(potion, inventory);
 
         brewTimer = 0f;
+        animationTimer = 0f;
         isBrewing = true;
         potionReady = false;
     }
@@ -65,26 +91,12 @@ public class CauldronManager : MonoBehaviour
     {
         foreach (var ingredient in potion.ingredients)
         {
-            int remaining = ingredient.amount;
-
-            while (remaining > 0)
+            for (int i = 0; i < ingredient.amount; i++)
             {
-                if (inventory.toolbar.TryRemoveSingleItem(ingredient.item.data.itemName))
-                {
-                    remaining--;
-                    continue;
-                }
-
-                if (inventory.backpack.TryRemoveSingleItem(ingredient.item.data.itemName))
-                {
-                    remaining--;
-                    continue;
-                }
-
-                break;
+                if (!inventory.toolbar.TryRemoveSingleItem(ingredient.item.data.itemName))
+                    inventory.backpack.TryRemoveSingleItem(ingredient.item.data.itemName);
             }
         }
-
         GameManager.instance.uiManager.RefreshAll();
     }
 
@@ -92,6 +104,14 @@ public class CauldronManager : MonoBehaviour
     {
         potionReady = true;
         isBrewing = false;
+        cauldronTilemap.SetTile(tilePos, readyTile);
+
+        if (currentPotion != null && potionSpawnPoint != null)
+        {
+            currentVisual = Instantiate(currentPotion.potionItem.gameObject, potionSpawnPoint.position, Quaternion.identity);
+            currentVisual.name = "FinishedPotionVisual";
+            if(currentVisual.GetComponent<Collider2D>()) currentVisual.GetComponent<Collider2D>().enabled = false;
+        }
     }
 
     public void CollectPotion()
@@ -103,6 +123,7 @@ public class CauldronManager : MonoBehaviour
             playerInventory.Add("Backpack", currentPotion.potionItem);
         }
 
+        if (currentVisual != null) Destroy(currentVisual);
         ResetCauldron();
         GameManager.instance.uiManager.RefreshAll();
     }
@@ -110,7 +131,8 @@ public class CauldronManager : MonoBehaviour
     private void ResetCauldron()
     {
         currentPotion = null;
-        brewTimer = 0f;
+        isBrewing = false;
         potionReady = false;
+        cauldronTilemap.SetTile(tilePos, idleTile);
     }
 }

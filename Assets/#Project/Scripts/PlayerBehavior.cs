@@ -13,6 +13,9 @@ public class PlayerBehavior : MonoBehaviour
     [Header("Interaction")]
     [SerializeField] private float interactRange = 1.5f;
 
+    [Header("Potion Use UI")]
+    public PotionUseUI potionUseUI;
+
     private Vector2 moveInput;
     private Vector3 movement;
     private PlayerInput playerInput;
@@ -20,7 +23,7 @@ public class PlayerBehavior : MonoBehaviour
     public InventoryManager inventory;
     private TileManager tileManager;
     private bool isInventoryOpen = false;
-    private PlayerEnergy playerEnergy; 
+    private PlayerEnergy playerEnergy;
 
     private void Awake()
     {
@@ -33,48 +36,37 @@ public class PlayerBehavior : MonoBehaviour
         var interactAction = playerInput.actions["Interact"];
         interactAction.performed += OnInteract;
 
+        var rightClickAction = playerInput.actions["RightClick"];
+        rightClickAction.performed += OnRightClick;
+
         inventory = GetComponent<InventoryManager>();
-        
         playerEnergy = GetComponent<PlayerEnergy>();
     }
 
     private void OnDestroy()
     {
-        var moveAction = playerInput.actions["Move"];
-        moveAction.performed -= OnMove;
-        moveAction.canceled -= OnMove;
-
-        var interactAction = playerInput.actions["Interact"];
-        interactAction.performed -= OnInteract;
+        playerInput.actions["Move"].performed -= OnMove;
+        playerInput.actions["Move"].canceled -= OnMove;
+        playerInput.actions["Interact"].performed -= OnInteract;
+        playerInput.actions["RightClick"].performed -= OnRightClick;
     }
 
     private void Start()
     {
         tileManager = GameManager.instance.tileManager;
         animator = GetComponentInChildren<Animator>();
-        
-        Item hoeItem = GameManager.instance.itemManager.GetItemByName("Hoe");
-        inventory.Add("Toolbar", hoeItem);
 
-        Item wateringCanItem = GameManager.instance.itemManager.GetItemByName("WateringCan");
-        inventory.Add("Toolbar", wateringCanItem);
+        inventory.Add("Toolbar", GameManager.instance.itemManager.GetItemByName("Hoe"));
+        inventory.Add("Toolbar", GameManager.instance.itemManager.GetItemByName("WateringCan"));
+        inventory.Add("Toolbar", GameManager.instance.itemManager.GetItemByName("Axe"));
 
-        Item axeItem = GameManager.instance.itemManager.GetItemByName("Axe");
-        inventory.Add("Toolbar", axeItem);
+        Item valerianSeed = GameManager.instance.itemManager.GetItemByName("Valerian Seed");
+        if (valerianSeed != null)
+            for (int i = 0; i < 10; i++) inventory.Add("Backpack", valerianSeed);
 
-        Item valerianSeedItem = GameManager.instance.itemManager.GetItemByName("Valerian Seed"); 
-        if (valerianSeedItem != null)
-        {
-            for(int i = 0; i < 10; i++)
-                inventory.Add("Backpack", valerianSeedItem);
-        }
-
-        Item whiteMushroomSeedItem = GameManager.instance.itemManager.GetItemByName("White Mushroom Seed"); 
-        if (whiteMushroomSeedItem != null)
-        {
-            for(int i = 0; i < 5; i++)
-                inventory.Add("Backpack", whiteMushroomSeedItem);
-        }
+        Item mushroomSeed = GameManager.instance.itemManager.GetItemByName("White Mushroom Seed");
+        if (mushroomSeed != null)
+            for (int i = 0; i < 5; i++) inventory.Add("Backpack", mushroomSeed);
 
         GameManager.instance.uiManager.RefreshAll();
     }
@@ -112,11 +104,7 @@ public class PlayerBehavior : MonoBehaviour
     private void OnInteract(InputAction.CallbackContext context)
     {
         if (isInventoryOpen) return;
-
-        if (!playerEnergy.HasEnergy) 
-        {
-            return;
-        }
+        if (!playerEnergy.HasEnergy) return;
 
         if (currentCollectable != null)
         {
@@ -124,33 +112,34 @@ public class PlayerBehavior : MonoBehaviour
             return;
         }
 
-        if (inventory.toolbar.selectedSlot == null) return;
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactRange);
 
+        foreach (var hit in hits)
+        {
+            CauldronInteractable cauldron = hit.GetComponent<CauldronInteractable>();
+            if (cauldron != null)
+            {
+                cauldron.Interact(this);
+                return;
+            }
+        }
+
+        if (inventory.toolbar.selectedSlot == null) return;
         string selectedItem = inventory.toolbar.selectedSlot.itemName;
 
         if (selectedItem == "Axe")
         {
-            Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactRange);
-            
-            bool hitTree = false;
-
             foreach (var hit in hits)
             {
                 TreeManager tree = hit.GetComponentInParent<TreeManager>();
                 if (tree != null)
                 {
                     tree.HitTree(this);
-                    hitTree = true; 
-                    break;
+                    animator.SetTrigger("isChopping");
+                    playerEnergy.ConsumeEnergy();
+                    return;
                 }
             }
-
-            if (hitTree)
-            {
-                animator.SetTrigger("isChopping");
-                playerEnergy.ConsumeEnergy();
-            }
-            return;
         }
 
         Vector3Int position = new Vector3Int(
@@ -161,31 +150,29 @@ public class PlayerBehavior : MonoBehaviour
 
         if (tileManager == null) return;
 
-        string tileName = tileManager.GetTileName(position);
-        if (string.IsNullOrWhiteSpace(tileName)) return;
-
         if (tileManager.IsCropReadyToHarvest(position))
         {
             TryHarvest(position);
             return;
         }
 
+        string tileName = tileManager.GetTileName(position);
+        if (string.IsNullOrWhiteSpace(tileName)) return;
+
         if (tileName == "soil" && tileManager.GetCropTile(position) == null)
         {
-            ItemData selectedItemData = GameManager.instance.itemManager.GetItemByName(selectedItem).data;
-            CropData cropData = selectedItemData.cropData;
-
-            if (cropData != null) 
+            Item itemObj = GameManager.instance.itemManager.GetItemByName(selectedItem);
+            if (itemObj != null && itemObj.data != null && itemObj.data.cropData != null)
             {
                 if (inventory.toolbar.TryRemoveSingleItem(selectedItem))
                 {
-                    tileManager.PlantCrop(position, cropData);
+                    tileManager.PlantCrop(position, itemObj.data.cropData);
                     GameManager.instance.uiManager.RefreshAll();
                     return;
                 }
             }
         }
-        
+
         if (tileName == "Interactable" && selectedItem == "Hoe")
         {
             tileManager.SetInteracted(position);
@@ -215,25 +202,21 @@ public class PlayerBehavior : MonoBehaviour
             animator.SetFloat("vertical", direction.y);
         }
     }
-    
+
     private void TryHarvest(Vector3Int position)
     {
-        CropTile cropTile = tileManager.GetCropTile(position); 
-
+        CropTile cropTile = tileManager.GetCropTile(position);
         if (cropTile != null && cropTile.cropData != null && cropTile.cropData.grownItemPrefab != null)
         {
-            Item grownItem = cropTile.cropData.grownItemPrefab;
-            inventory.Add("Backpack", grownItem); 
-            
+            inventory.Add("Backpack", cropTile.cropData.grownItemPrefab);
             tileManager.ClearCrop(position);
-            
             GameManager.instance.uiManager.RefreshAll();
         }
     }
 
-    public void SetCurrentCollectable(Collectable collactable)
+    public void SetCurrentCollectable(Collectable collectable)
     {
-        currentCollectable = collactable;
+        currentCollectable = collectable;
     }
 
     public void DropItemFromInventory(string itemName)
@@ -281,5 +264,16 @@ public class PlayerBehavior : MonoBehaviour
     public void SetInventoryState(bool isOpen)
     {
         isInventoryOpen = isOpen;
+    }
+
+    private void OnRightClick(InputAction.CallbackContext context)
+    {
+        if (!context.started) return;
+
+        var selectedSlot = inventory.toolbar.selectedSlot;
+        if (selectedSlot != null && selectedSlot.itemName == "Energy Potion")
+        {
+            potionUseUI.Open(playerEnergy, inventory, "Energy Potion");
+        }
     }
 }
