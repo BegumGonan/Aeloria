@@ -62,11 +62,18 @@ public class PlayerBehavior : MonoBehaviour
         Item axeItem = GameManager.instance.itemManager.GetItemByName("Axe");
         inventory.Add("Toolbar", axeItem);
 
-        Item seedItem = GameManager.instance.itemManager.GetItemByName("Valerian Seed"); 
-        if (seedItem != null)
+        Item valerianSeedItem = GameManager.instance.itemManager.GetItemByName("Valerian Seed"); 
+        if (valerianSeedItem != null)
         {
             for(int i = 0; i < 10; i++)
-                inventory.Add("Backpack", seedItem);
+                inventory.Add("Backpack", valerianSeedItem);
+        }
+
+        Item whiteMushroomSeedItem = GameManager.instance.itemManager.GetItemByName("White Mushroom Seed"); 
+        if (whiteMushroomSeedItem != null)
+        {
+            for(int i = 0; i < 5; i++)
+                inventory.Add("Backpack", whiteMushroomSeedItem);
         }
 
         GameManager.instance.uiManager.RefreshAll();
