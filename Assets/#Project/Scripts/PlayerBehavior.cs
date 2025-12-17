@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System.Collections;
 
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerBehavior : MonoBehaviour
@@ -12,6 +13,7 @@ public class PlayerBehavior : MonoBehaviour
 
     [Header("Interaction")]
     [SerializeField] private float interactRange = 1.5f;
+    private bool isInteracting = false;
 
     [Header("Potion Use UI")]
     public PotionUseUI potionUseUI;
@@ -73,7 +75,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private void Update()
     {
-        if (isInventoryOpen)
+        if (isInventoryOpen || isInteracting)
         {
             movement = Vector3.zero;
             AnimateMovement(Vector3.zero);
@@ -86,7 +88,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (isInventoryOpen) return;
+        if (isInventoryOpen || isInteracting) return;
         transform.position += movement * speed * Time.deltaTime;
     }
 
@@ -103,7 +105,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private void OnInteract(InputAction.CallbackContext context)
     {
-        if (isInventoryOpen) return;
+        if (isInventoryOpen || isInteracting) return;
         if (!playerEnergy.HasEnergy) return;
 
         if (currentCollectable != null)
@@ -117,21 +119,10 @@ public class PlayerBehavior : MonoBehaviour
         foreach (var hit in hits)
         {
             FinishedPotionPickup potion = hit.GetComponent<FinishedPotionPickup>();
-            if (potion != null)
-            {
-                potion.Collect();
-                return;
-            }
-        }
+            if (potion != null) { potion.Collect(); return; }
 
-        foreach (var hit in hits)
-        {
             CauldronInteractable cauldron = hit.GetComponent<CauldronInteractable>();
-            if (cauldron != null)
-            {
-                cauldron.Interact(this);
-                return;
-            }
+            if (cauldron != null) { cauldron.Interact(this); return; }
         }
 
         if (inventory.toolbar.selectedSlot == null) return;
@@ -144,9 +135,10 @@ public class PlayerBehavior : MonoBehaviour
                 TreeManager tree = hit.GetComponentInParent<TreeManager>();
                 if (tree != null)
                 {
-                    tree.HitTree(this);
-                    animator.SetTrigger("isChopping");
-                    playerEnergy.ConsumeEnergy();
+                    StartCoroutine(PerformActionWithDelay("isChopping", () => {
+                        tree.HitTree(this);
+                        playerEnergy.ConsumeEnergy();
+                    }, 0.3f));
                     return;
                 }
             }
@@ -185,18 +177,35 @@ public class PlayerBehavior : MonoBehaviour
 
         if (tileName == "Interactable" && selectedItem == "Hoe")
         {
-            tileManager.SetInteracted(position);
-            animator.SetTrigger("isPlowing");
-            playerEnergy.ConsumeEnergy();
+            StartCoroutine(PerformActionWithDelay("isPlowing", () => {
+                tileManager.SetInteracted(position);
+                playerEnergy.ConsumeEnergy();
+            }, 0.3f));
         }
         else if (tileName == "soil" && selectedItem == "WateringCan")
         {
-            if (tileManager.IsSoilWatered(position)) return;
+            if (tileManager.GetCropTile(position) != null)
+            {
+                if (tileManager.IsSoilWatered(position)) return;
 
-            tileManager.SetWatered(position);
-            animator.SetTrigger("isWatering");
-            playerEnergy.ConsumeEnergy();
+                StartCoroutine(PerformActionWithDelay("isWatering", () => {
+                    tileManager.SetWatered(position);
+                    playerEnergy.ConsumeEnergy();
+                }, 0.4f)); 
+            }
         }
+    }
+
+    private IEnumerator PerformActionWithDelay(string animTrigger, System.Action action, float delay)
+    {
+        isInteracting = true;
+        animator.SetTrigger(animTrigger);
+        
+        yield return new WaitForSeconds(delay);
+        action.Invoke();
+        
+        yield return new WaitForSeconds(0.2f);
+        isInteracting = false;
     }
 
     private void AnimateMovement(Vector3 direction)
