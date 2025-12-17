@@ -21,7 +21,6 @@ public class PlayerBehavior : MonoBehaviour
     private Vector2 moveInput;
     private Vector3 movement;
     private PlayerInput playerInput;
-    private Collectable currentCollectable;
     public InventoryManager inventory;
     private TileManager tileManager;
     private bool isInventoryOpen = false;
@@ -108,13 +107,30 @@ public class PlayerBehavior : MonoBehaviour
         if (isInventoryOpen || isInteracting) return;
         if (!playerEnergy.HasEnergy) return;
 
-        if (currentCollectable != null)
+        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactRange);
+
+        Collectable closestCollectable = null;
+        float closestDistance = float.MaxValue;
+
+        foreach (var hit in hits)
         {
-            currentCollectable.TryCollect();
-            return;
+            Collectable col = hit.GetComponent<Collectable>();
+            if (col != null)
+            {
+                float dist = Vector2.Distance(transform.position, hit.transform.position);
+                if (dist < closestDistance)
+                {
+                    closestDistance = dist;
+                    closestCollectable = col;
+                }
+            }
         }
 
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, interactRange);
+        if (closestCollectable != null)
+        {
+            closestCollectable.Collect(this);
+            return; 
+        }
 
         foreach (var hit in hits)
         {
@@ -231,11 +247,6 @@ public class PlayerBehavior : MonoBehaviour
             tileManager.ClearCrop(position);
             GameManager.instance.uiManager.RefreshAll();
         }
-    }
-
-    public void SetCurrentCollectable(Collectable collectable)
-    {
-        currentCollectable = collectable;
     }
 
     public void DropItemFromInventory(string itemName)
