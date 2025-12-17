@@ -113,6 +113,7 @@ public class Inventory_UI : MonoBehaviour
 
     public void SlotBeginDrag(Slot_UI slot)
     {
+        UI_Manager.dragCompletedOnSlot = false;
         UI_Manager.draggedSlot = slot;
         dragSingleForThisDrag = UI_Manager.dragSingle;
 
@@ -142,19 +143,23 @@ public class Inventory_UI : MonoBehaviour
 
         if (UI_Manager.draggedSlot != null)
         {
-            Vector2 mousePos = Mouse.current.position.ReadValue();
-            bool pointerOutside = !RectTransformUtility.RectangleContainsScreenPoint(
-                inventoryPanelRect, 
-                mousePos, 
-                canvas.renderMode == RenderMode.ScreenSpaceCamera ? canvas.worldCamera : null
-            );
-
-            if (pointerOutside)
+            if (!UI_Manager.dragCompletedOnSlot)
             {
-                int countInSlot = UI_Manager.draggedSlot.inventory.Slots[UI_Manager.draggedSlot.slotID].count;
-                int countToDrop = dragSingleForThisDrag ? 1 : countInSlot; 
-                
-                Remove(countToDrop);
+                Vector2 mousePos = Mouse.current.position.ReadValue();
+                bool pointerOutside = !RectTransformUtility.RectangleContainsScreenPoint(
+                    inventoryPanelRect,
+                    mousePos,
+                    canvas.renderMode == RenderMode.ScreenSpaceCamera ? canvas.worldCamera : null
+                );
+
+                if (pointerOutside)
+                {
+                    int countInSlot = UI_Manager.draggedSlot.inventory
+                        .Slots[UI_Manager.draggedSlot.slotID].count;
+
+                    int countToDrop = dragSingleForThisDrag ? 1 : countInSlot;
+                    Remove(countToDrop);
+                }
             }
         }
 
@@ -166,6 +171,8 @@ public class Inventory_UI : MonoBehaviour
     {
         if (UI_Manager.draggedSlot == null || slot == null) return;
         if (UI_Manager.draggedSlot == slot) return;
+
+        UI_Manager.dragCompletedOnSlot = true;
 
         Inventory sourceInventory = UI_Manager.draggedSlot.inventory;
         int fromIndex = UI_Manager.draggedSlot.slotID;

@@ -14,6 +14,7 @@ public class UI_Manager : MonoBehaviour
     public static Slot_UI draggedSlot;
     public static Image draggedIcon;
     public static bool dragSingle;
+    public static bool dragCompletedOnSlot;
 
     [Header("Input Actions")]
     [SerializeField] private InputActionAsset inputActionsAsset;
