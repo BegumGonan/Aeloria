@@ -191,6 +191,8 @@ MonoBehaviour:
   woodFromStump: 3
   isCut: 0
   cutDay: -1
+  chopSound: {fileID: 8300000, guid: 4b3f007dc14c7934583329bd0a418976, type: 3}
+  woodDropSound: {fileID: 8300000, guid: 99ba04b143475da47a87849c07a8ae07, type: 3}
   treeCollider: {fileID: 7326514801077190085}
   stumpCollider: {fileID: 618549906680113436}
   interactionCollider: {fileID: 380420639370260367}

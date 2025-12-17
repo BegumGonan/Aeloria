@@ -18,6 +18,11 @@ public class PlayerBehavior : MonoBehaviour
     [Header("Potion Use UI")]
     public PotionUseUI potionUseUI;
 
+    [Header("Audio")]
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip wateringSound;
+    [SerializeField] private AudioClip plowingSound;
+
     private Vector2 moveInput;
     private Vector3 movement;
     private PlayerInput playerInput;
@@ -216,6 +221,9 @@ public class PlayerBehavior : MonoBehaviour
     {
         isInteracting = true;
         animator.SetTrigger(animTrigger);
+
+        if (animTrigger == "isWatering" && wateringSound != null) audioSource.PlayOneShot(wateringSound);
+        if (animTrigger == "isPlowing" && plowingSound != null) audioSource.PlayOneShot(plowingSound);
         
         yield return new WaitForSeconds(delay);
         action.Invoke();

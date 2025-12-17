@@ -20,6 +20,11 @@ public class TreeManager : MonoBehaviour
     public bool isCut = false;
     public int cutDay = -1;
 
+    [Header("Audio")]
+    public AudioClip chopSound;
+    public AudioClip woodDropSound;
+    private AudioSource audioSource;
+
     [Header("Colliders")]
     [SerializeField] private Collider2D treeCollider;
     [SerializeField] private Collider2D stumpCollider;
@@ -30,6 +35,7 @@ public class TreeManager : MonoBehaviour
     void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
+        audioSource = GetComponent<AudioSource>();
         if (treeCollider != null) treeCollider.enabled = true;
         if (stumpCollider != null) stumpCollider.enabled = false;
         if (interactionCollider != null) interactionCollider.enabled = true;
@@ -42,6 +48,12 @@ public class TreeManager : MonoBehaviour
         if (player.inventory.toolbar.selectedSlot == null ||
             player.inventory.toolbar.selectedSlot.itemName != "Axe")
             return;
+        
+        AudioSource playerAudio = player.GetComponent<AudioSource>();
+        if (playerAudio != null && chopSound != null)
+        {
+            playerAudio.PlayOneShot(chopSound);
+        }
 
         if (!isStump)
         {
@@ -88,6 +100,12 @@ public class TreeManager : MonoBehaviour
     private void DropWood(int amount)
     {
         if (woodPrefab == null) return;
+
+        AudioSource playerAudio = FindFirstObjectByType<PlayerBehavior>().GetComponent<AudioSource>();
+        if (playerAudio != null && woodDropSound != null)
+        {
+            playerAudio.PlayOneShot(woodDropSound);
+        }
 
         Collider2D col = treeCollider;
         float minDistance = 0.5f;
