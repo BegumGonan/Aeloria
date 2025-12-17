@@ -23,6 +23,7 @@ public class PotionUseUI : MonoBehaviour
     public void Open(PlayerEnergy energy, InventoryManager inv, string potionName)
     {
         this.playerEnergy = energy;
+        this.inventoryManager = inv;
         this.inventory = inv.backpack;
         this.potionName = potionName;
 
@@ -38,12 +39,34 @@ public class PotionUseUI : MonoBehaviour
 
     private void OnYesClicked()
     {
-        if (potionName == "Energy Potion")
+        if (potionName != "Energy Potion") return;
+
+        playerEnergy.DrinkEnergyPotion();
+
+        if (inventoryManager.toolbar != null && inventoryManager.toolbar.selectedSlot != null)
         {
-            playerEnergy.DrinkEnergyPotion();
-            inventory.TryRemoveSingleItem(potionName);
+            var toolbarSlot = inventoryManager.toolbar.selectedSlot;
+            if (toolbarSlot.itemName == potionName)
+            {
+                toolbarSlot.RemoveItem();
+
+                if (toolbarSlot.IsEmpty)
+                {
+                    inventoryManager.toolbar.selectedSlot = null;
+                }
+
+                FinalizeConsumption();
+                return;
+            }
         }
 
+        inventoryManager.backpack.TryRemoveSingleItem(potionName);
+        FinalizeConsumption();
+    }
+
+    private void FinalizeConsumption()
+    {
+        GameManager.instance.uiManager.RefreshAll();
         Close();
     }
 

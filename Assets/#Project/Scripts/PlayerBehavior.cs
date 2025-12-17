@@ -116,6 +116,16 @@ public class PlayerBehavior : MonoBehaviour
 
         foreach (var hit in hits)
         {
+            FinishedPotionPickup potion = hit.GetComponent<FinishedPotionPickup>();
+            if (potion != null)
+            {
+                potion.Collect();
+                return;
+            }
+        }
+
+        foreach (var hit in hits)
+        {
             CauldronInteractable cauldron = hit.GetComponent<CauldronInteractable>();
             if (cauldron != null)
             {
@@ -268,7 +278,7 @@ public class PlayerBehavior : MonoBehaviour
 
     private void OnRightClick(InputAction.CallbackContext context)
     {
-        if (!context.started) return;
+        if (!context.performed) return;
 
         var selectedSlot = inventory.toolbar.selectedSlot;
         if (selectedSlot != null && selectedSlot.itemName == "Energy Potion")

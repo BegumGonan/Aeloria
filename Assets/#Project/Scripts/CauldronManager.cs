@@ -104,13 +104,23 @@ public class CauldronManager : MonoBehaviour
     {
         potionReady = true;
         isBrewing = false;
+
         cauldronTilemap.SetTile(tilePos, readyTile);
 
         if (currentPotion != null && potionSpawnPoint != null)
         {
-            currentVisual = Instantiate(currentPotion.potionItem.gameObject, potionSpawnPoint.position, Quaternion.identity);
+            currentVisual = Instantiate(
+                currentPotion.potionItem.gameObject,
+                potionSpawnPoint.position,
+                Quaternion.identity
+            );
+
             currentVisual.name = "FinishedPotionVisual";
-            if(currentVisual.GetComponent<Collider2D>()) currentVisual.GetComponent<Collider2D>().enabled = false;
+
+            Destroy(currentVisual.GetComponent<Collectable>());
+
+            var pickup = currentVisual.AddComponent<FinishedPotionPickup>();
+            pickup.cauldron = this;
         }
     }
 
@@ -123,7 +133,11 @@ public class CauldronManager : MonoBehaviour
             playerInventory.Add("Backpack", currentPotion.potionItem);
         }
 
-        if (currentVisual != null) Destroy(currentVisual);
+        if (currentVisual != null)
+            Destroy(currentVisual);
+
+        GetComponent<Collider2D>().enabled = true;
+
         ResetCauldron();
         GameManager.instance.uiManager.RefreshAll();
     }

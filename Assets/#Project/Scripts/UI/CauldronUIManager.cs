@@ -21,11 +21,14 @@ public class CauldronUIManager : MonoBehaviour
     {
         currentCauldron = cauldron;
         playerInventory = inventory;
+        playerBehavior = inventory.GetComponent<PlayerBehavior>();
+
         feedbackText.text = "";
         cauldronPanel.SetActive(true);
         playerBehavior.SetInventoryState(true);
 
-        foreach (var button in potionButtons) button.Setup(this);
+        foreach (var button in potionButtons)
+            button.Setup(this);
     }
 
     public void Close()
@@ -36,7 +39,7 @@ public class CauldronUIManager : MonoBehaviour
 
     public void TryStartPotion(PotionData potion)
     {
-        if (currentCauldron.isBrewing || currentCauldron.potionReady)
+        if (currentCauldron.isBrewing)
         {
             feedbackText.text = "The cauldron is busy!";
             feedbackText.color = Color.yellow;
@@ -50,9 +53,10 @@ public class CauldronUIManager : MonoBehaviour
             return;
         }
 
+        currentCauldron.StartPotion(potion, playerInventory);
         feedbackText.text = "Brewing started!";
         feedbackText.color = Color.green;
-        currentCauldron.StartPotion(potion, playerInventory);
-        Invoke("Close", 1.5f);
+
+        Invoke(nameof(Close), 1.5f);
     }
 }

@@ -14785,7 +14785,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8087639180420175958}
-  - component: {fileID: 5877873749296182001}
+  - component: {fileID: 5032671816021308473}
   m_Layer: 5
   m_Name: PotionUsePanel
   m_TagString: Untagged
@@ -14816,7 +14816,7 @@ RectTransform:
   m_AnchoredPosition: {x: 62.0185, y: 8.5413}
   m_SizeDelta: {x: 505.6671, y: 82.2907}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &5877873749296182001
+--- !u!114 &5032671816021308473
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

@@ -86,7 +86,6 @@ public class PlayerEnergy : MonoBehaviour
 
         currentInteractions = 0;
         UpdateSprite();
-        Debug.Log("Energy potion consumed. Energy restored.");
     }
 
     private void UpdateSprite()
